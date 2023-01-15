@@ -1,10 +1,18 @@
-function downloadXlsx() {
-    fetch('/admin/download', {
-        method: 'POST',
-        body: JSON.stringify({}),
-        headers: { 'Content-Type': 'application/json' }
-    })
-}
+function downloadFiles() {
+    fetch('/admin/download')
+      .then(response => response.blob())
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.download = 'bot_static.zip';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(url);
+      })
+      .catch(error => console.error(error));
+  }
 
 var tagContador = document.getElementById('cont')
 var rounds = 0
@@ -123,7 +131,7 @@ document.getElementById("form-data").addEventListener("submit", (event) => {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Dados enviados', data)
-                    
+
                     //Limpando campos
                     tagLastNum.value = ''
                     document.getElementById("count_win1").innerHTML = 0
