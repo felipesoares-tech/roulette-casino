@@ -51,6 +51,6 @@ module.exports = {
                 prediction2 = 1;
             }
         }
-        return `${prediction1} e ${prediction2}`
+        return `${prediction1},${prediction2}`
     }
 }

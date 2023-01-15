@@ -24,11 +24,7 @@ module.exports = {
             proxima_coluna2 = (lastNumber + 1) % 3 + 1
         }
 
-        contador_coluna1 = 0
-        contador_coluna2 = 0
-        contador_coluna3 = 0
-
-        return `${proxima_coluna1} e ${proxima_coluna2}`
+        return `${proxima_coluna1},${proxima_coluna2}`
 
     }
 }

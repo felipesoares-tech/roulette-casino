@@ -3,6 +3,11 @@ const router = express.Router()
 const bot_1 = require('../internal_modules/bot_1')
 const bot_2 = require('../internal_modules/bot_2')
 const bot_3 = require('../internal_modules/bot_3')
+const mongoose = require('mongoose')
+require('../models/Results')
+const result_bot1 = mongoose.model('result_bot1')
+const result_bot2 = mongoose.model('result_bot2')
+const result_bot3 = mongoose.model('result_bot3')
 const Excel = require('exceljs')
 
 var ultimos_numeros = [0, 0, 0, 0, 0]
@@ -36,6 +41,40 @@ router.post('/submit-data', (req, res) => {
     let bot2_predict = bot_2.predict(lastNumber, ultimos_numeros)
     let bot3_predict = bot_3.predict(lastNumber, ultimos_numeros)
 
+    const ResultBot1 = {
+        rodada: count,
+        previsao: bot1_predict,
+        vitoria: winBot1,
+    }
+    const ResultBot2 = {
+        rodada: count,
+        previsao: bot2_predict,
+        vitoria: winBot1,
+    }
+    const ResultBot3 = {
+        rodada: count,
+        previsao: bot3_predict,
+        vitoria: winBot1,
+    }
+
+    new result_bot1(ResultBot1).save().then(() => {
+        console.log('Dados bot1 salvos com sucesso!')
+    }).catch((err) => {
+        console.log('Erro ao salvar resultados do bot1 ' + err)
+    })
+
+    new result_bot2(ResultBot2).save().then(() => {
+        console.log('Dados bot2 salvos com sucesso!')
+    }).catch((err) => {
+        console.log('Erro ao salvar resultados do bot2 ' + err)
+    })
+
+    new result_bot3(ResultBot3).save().then(() => {
+        console.log('Dados bot3 salvos com sucesso!')
+    }).catch((err) => {
+        console.log('Erro ao salvar resultados do bot3 ' + err)
+    })
+
     res.status(200).json({
         last_numbers: ultimos_numeros,
         predict1: bot1_predict,
@@ -49,6 +88,5 @@ router.post('/submit-data', (req, res) => {
     })
 
 })
-
 
 module.exports = router

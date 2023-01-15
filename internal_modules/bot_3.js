@@ -28,7 +28,7 @@ module.exports = {
         contador_coluna2 = 0
         contador_coluna3 = 0
 
-        return `${proxima_coluna1} e ${proxima_coluna2}`
+        return `${proxima_coluna1},${proxima_coluna2}`
 
     }
 }
