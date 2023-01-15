@@ -31,28 +31,47 @@ document.getElementById('btn_last_five').addEventListener('click', () => {
 })
 
 document.getElementById('btn_win1').addEventListener('click', () => {
-    if (controlBot1 && rounds > 0) {
-        winBot1++;
-        document.getElementById("count_win1").innerHTML = winBot1
-        controlBot1 = false
+    if (rounds > 0) {
+        if (controlBot1) {
+            winBot1++;
+            document.getElementById("count_win1").innerHTML = winBot1
+            controlBot1 = false
+        } else {
+            winBot1--;
+            document.getElementById("count_win1").innerHTML = winBot1
+            controlBot1 = true
+        }
     } else
         return false
+
 })
 
 document.getElementById('btn_win2').addEventListener('click', () => {
-    if (controlBot2 && rounds > 0) {
-        winBot2++;
-        document.getElementById("count_win2").innerHTML = winBot2
-        controlBot2 = false
+    if (rounds > 0) {
+        if (controlBot2) {
+            winBot2++;
+            document.getElementById("count_win2").innerHTML = winBot2
+            controlBot2 = false
+        } else {
+            winBot2--;
+            document.getElementById("count_win2").innerHTML = winBot2
+            controlBot2 = true
+        }
     } else
         return false
 })
 
 document.getElementById('btn_win3').addEventListener('click', () => {
-    if (controlBot3 && rounds > 0) {
-        winBot3++;
-        document.getElementById("count_win3").innerHTML = winBot3
-        controlBot3 = false
+    if (rounds > 0) {
+        if (controlBot3) {
+            winBot3++;
+            document.getElementById("count_win3").innerHTML = winBot3
+            controlBot3 = false
+        } else {
+            winBot3--;
+            document.getElementById("count_win3").innerHTML = winBot3
+            controlBot3 = true
+        }
     } else
         return false
 })
