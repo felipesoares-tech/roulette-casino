@@ -1,7 +1,7 @@
 
 function downloadXlsx() {
     console.log('teste')
-    fetch('/submit-data')
+    fetch('/admin/submit-data')
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.log('Erro:', error));
@@ -99,7 +99,7 @@ document.getElementById("form-data").addEventListener("submit", (event) => {
         numeroDigitado.value = lastNum
         tagContador.value = parseInt(valueContador) + 1
         rounds = parseInt(valueContador) + 1
-        fetch('/submit-data', {
+        fetch('/admin/submit-data', {
             method: 'POST',
             body: JSON.stringify({ lastNum, valueContador, valueWinBot1, valueWinBot2, valueWinBot3, arrayLastFiveNumbers }),
             headers: { 'Content-Type': 'application/json' }
