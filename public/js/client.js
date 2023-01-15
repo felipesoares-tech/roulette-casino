@@ -1,9 +1,9 @@
 function downloadXlsx() {
-    console.log('teste')
-    fetch('/admin/submit-data')
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.log('Erro:', error));
+    fetch('/admin/download', {
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: { 'Content-Type': 'application/json' }
+    })
 }
 
 var tagContador = document.getElementById('cont')

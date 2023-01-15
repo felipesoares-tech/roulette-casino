@@ -12,8 +12,14 @@ const Excel = require('exceljs')
 
 var ultimos_numeros = [0, 0, 0, 0, 0]
 
-router.get('/download', (req, res) => {
-
+router.post('/download', (req, res) => {
+    result_bot1.find({}, (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(data);
+        }
+    });
 })
 
 router.post('/array-update', (req, res) => {
