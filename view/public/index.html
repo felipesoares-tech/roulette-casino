@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Casino Roulette</title>
+</head>
+<body>
+    <form id="form-data" class="container">
+        <div class="container_bot_results">
+            <div class="line">
+                <div class="bot">
+                    <p>BOT 1</p>
+                    <input id="predict_bot1" type="text" readonly>
+                    <button type="button" id="btn_win1">WIN</button>
+                    <label>Win: <label id="count_win1">0</label></label>
+                </div>
+                <div class="bot">
+                    <p>BOT 2</p>
+                    <input id="predict_bot2" type="text" readonly>
+                    <button type="button" id="btn_win2">WIN</button>
+                    <label>Win: <label id="count_win2">0</label></label>
+                </div>
+                <div class="bot">
+                    <p>BOT 3</p>
+                    <input id="predict_bot3" type="text" readonly>
+                    <button type="button" id="btn_win3">WIN</button>
+                    <label>Win: <label id="count_win3">0</label></label>
+                </div>
+            </div>
+            <div class="line">
+                <div class="square">
+                    <label for="cont">Contador</label>
+                    <input type="text" id="cont" readonly>
+                </div>
+                <div class="square">
+                    <label for="num">Digite o ultimo número:</label>
+                    <input type="text" id="last_num">
+
+                    <label for="result">Resultado:</label>
+                    <input type="text" id="result" readonly>
+
+                    <button id="btn" type="submit">Enviar</button>
+                </div>
+                <div class="square">
+                    <p>Ult. numero:</p>
+                    <input id="ult_num" type="text" readonly>
+                </div>
+            </div>
+
+            <div class="line">
+                <div class="container_btn">
+                    <button type="button" onclick="downloadXlsx()">DOWNLOAD XLSX</button>
+                    <button id="btn_last_five">INSERIR 5 ULT. NUM.</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="/client.js"></script>
+</body>
+
+
+</html>
