@@ -14,94 +14,50 @@ const Excel = require('exceljs')
 
 var ultimos_numeros = [0, 0, 0, 0, 0]
 
-router.get('/download', async (req, res) => {
+router.get('/download', async (req, res) => { //Rota para download do xlsx
     var workbook = new Excel.Workbook()
-    // var workbook2 = new Excel.Workbook()
-    // var workbook3 = new Excel.Workbook()
 
     const worksheet1 = workbook.addWorksheet('Dados Bot 1')
     const worksheet2 = workbook.addWorksheet('Dados Bot 2')
     const worksheet3 = workbook.addWorksheet('Dados Bot 3')
 
-    const columns = [
+    const columns = [ //Criação das colunas no excel
         { header: 'Rodada', key: 'rodada' },
         { header: 'Previsao', key: 'previsao' },
         { header: 'Vitoria', key: 'vitoria' },
         { header: 'DataHora', key: 'dataHora' }
-    ];
+    ]
 
-    worksheet1.columns = columns
-    worksheet2.columns = columns
-    worksheet3.columns = columns
+    worksheet1.columns = columns //definindo colunas para cada aba no excell, ex: 'Dados Bot 1'
+    worksheet2.columns = columns //definindo colunas para cada aba no excell, ex: 'Dados Bot 2'
+    worksheet3.columns = columns //definindo colunas para cada aba no excell, ex: 'Dados Bot 3'
 
-    const botData_1 = await result_bot1.find({}).skip(1)
+    const botData_1 = await result_bot1.find({}).skip(1) //Realiza uma busca no banco de dados de todos os registros e pula somente o primeiro registro
     const botData_2 = await result_bot2.find({}).skip(1)
     const botData_3 = await result_bot3.find({}).skip(1)
 
-    botData_1.forEach(d => {
-        const row = worksheet1.addRow(d)
+    botData_1.forEach(data => { //forEach usado para passar por cada campo da linha atual e adicionar dentro do xlsx
+        const row = worksheet1.addRow(data)
         row.eachCell((cell) => {
             cell.alignment = { horizontal: 'center' };
         })
     })
-    botData_2.forEach(d => {
-        const row = worksheet2.addRow(d)
+    botData_2.forEach(data => {
+        const row = worksheet2.addRow(data)
         row.eachCell((cell) => {
             cell.alignment = { horizontal: 'center' };
         })
     })
-    botData_3.forEach(d => {
-        const row = worksheet3.addRow(d)
+    botData_3.forEach(data => {
+        const row = worksheet3.addRow(data)
         row.eachCell((cell) => {
             cell.alignment = { horizontal: 'center' };
-        });
-
+        })
     })
-
-    // result_bot1.find({}, (err, data) => {
-    //     worksheet1.addRow(['Rodada', 'Previsao', 'Vitoria', 'DataHora'])
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         data.forEach((item) => {
-    //             console.log(item['rodada'], item['previsao'], item['vitoria'], item['dataHora'])
-    //             worksheet1.addRow([`${item['rodada']}`, `${item['previsao']}`, `${item['vitoria']}`, `${item['dataHora']}`])
-    //         })
-
-    //     }
-    // })
-
-
-    // var worksheet2 = workbook.addWorksheet('Dados Bot 2')
-    // result_bot2.find({}, (err, data) => {
-    //     worksheet2.addRow(['Rodada', 'Previsao', 'Vitoria', 'DataHora'])
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         data.forEach((item) => {
-    //             console.log(item['rodada'], item['previsao'], item['vitoria'], item['dataHora'])
-    //             worksheet2.addRow([`${item['rodada']}`, `${item['previsao']}`, `${item['vitoria']}`, `${item['dataHora']}`])
-    //         })
-    //     }
-    // })
-
-    // var worksheet3 = workbook.addWorksheet('Dados Bot 3')
-    // result_bot3.find({}, (err, data) => {
-    //     worksheet3.addRow(['Rodada', 'Previsao', 'Vitoria', 'DataHora'])
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-
-    //         data.forEach((item) => {
-    //             console.log(item['rodada'], item['previsao'], item['vitoria'], item['dataHora'])
-    //             worksheet3.addRow([`${item['rodada']}`, `${item['previsao']}`, `${item['vitoria']}`, `${item['dataHora']}`])
-    //         })
-    //     }
-    // })
 
     const archive = archiver('zip', {
         zlib: { level: 9 } // Nível de compressão
-    });
+    })
 
     res.setHeader('Content-Type', 'application/zip')
     res.setHeader('Content-Disposition', 'attachment; filename=my-excel-files.zip')
@@ -110,30 +66,25 @@ router.get('/download', async (req, res) => {
 
     Promise.all([
         workbook.xlsx.writeBuffer()
-        // workbook2.xlsx.writeBuffer(),
-        // workbook3.xlsx.writeBuffer()
-    ]).then(([buffer1, buffer2, buffer3]) => {
+    ]).then(([buffer1]) => {
         archive.append(Buffer.from(buffer1), { name: 'data.xlsx' });
-        // archive.append(Buffer.from(buffer2), { name: 'file2.xlsx' });
-        // archive.append(Buffer.from(buffer3), { name: 'file3.xlsx' });
         archive.finalize();
-    });
+    })
 })
 
-router.post('/array-update', (req, res) => {
-    const paramArrayLastFiveNumbers = req.body.arrayLastFiveNumbers
-    var paramArrayToInt = paramArrayLastFiveNumbers.map((item) => {
+router.post('/array-update', (req, res) => { //Rota para atualizar o array ("Inserir 5 ultimo número")  
+    const paramArrayLastFiveNumbers = req.body.arrayLastFiveNumbers //Busca o parâmetro passado
+    var paramArrayToInt = paramArrayLastFiveNumbers.map((item) => { // Converte valores para inteiro
         return parseInt(item)
     })
 
-    ultimos_numeros = paramArrayToInt
-    let lastNumber = ultimos_numeros[4]
+    ultimos_numeros = paramArrayToInt // atualiza o array
 
-    var bot1_predict = bot_1.predict(lastNumber)
-    var bot2_predict = bot_2.predict(lastNumber, ultimos_numeros)
-    var bot3_predict = bot_3.predict(lastNumber, ultimos_numeros)
+    var bot1_predict = bot_1.predict(ultimos_numeros[4])    /*ultimos_numeros[4] -> Ultimo número do array*/ 
+    var bot2_predict = bot_2.predict(ultimos_numeros[4], ultimos_numeros)
+    var bot3_predict = bot_3.predict(ultimos_numeros[4], ultimos_numeros)
 
-    res.status(200).json({
+    res.status(200).json({ //Devolve uma respota ao cliente
         last_numbers: ultimos_numeros,
         predict1: bot1_predict,
         predict2: bot2_predict,
@@ -141,7 +92,7 @@ router.post('/array-update', (req, res) => {
     })
 })
 
-router.post('/submit-data', (req, res) => {
+router.post('/submit-data', (req, res) => { //Rota para tratamento de dados
     var currentDate = new Date();
     const lastNumber = parseInt(req.body.lastNum)
     const count = parseInt(req.body.valueContador) + 1
@@ -149,11 +100,11 @@ router.post('/submit-data', (req, res) => {
     const winBot2 = parseInt(req.body.valueWinBot2)
     const winBot3 = parseInt(req.body.valueWinBot3)
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {                   //Anda com a fila no array
         ultimos_numeros[i] = ultimos_numeros[i + 1]
     }
 
-    ultimos_numeros[4] = lastNumber
+    ultimos_numeros[4] = lastNumber //Adiciona o ultimo numero informado na ultima posição
 
     var bot1_predict = bot_1.predict(lastNumber)
     var bot2_predict = bot_2.predict(lastNumber, ultimos_numeros)
