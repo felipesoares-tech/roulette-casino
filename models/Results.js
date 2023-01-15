@@ -60,7 +60,7 @@ const ResultBot3 = new Schema({
         require: true
     }
 })
-ResultBot1.plugin(autoIncrement.plugin, { model: 'result_bot1', field: 'id' });
+
 mongoose.model('result_bot1', ResultBot1)
 mongoose.model('result_bot2', ResultBot2)
 mongoose.model('result_bot3', ResultBot3)
