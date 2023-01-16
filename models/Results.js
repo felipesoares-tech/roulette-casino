@@ -14,6 +14,10 @@ const ResultBot1 = new Schema({
         type: Boolean,
         require: true
     },
+    match: {
+        type: Boolean,
+        require: false
+    },
     dataHora: {
         type: Date,
         default: Date.now,
@@ -34,6 +38,10 @@ const ResultBot2 = new Schema({
         type: Boolean,
         require: true
     },
+    match: {
+        type: Boolean,
+        require: false
+    },
     dataHora: {
         type: Date,
         default: Date.now,
@@ -53,6 +61,10 @@ const ResultBot3 = new Schema({
     vitoria: {
         type: Boolean,
         require: true
+    },
+    match: {
+        type: Boolean,
+        require: false
     },
     dataHora: {
         type: Date,

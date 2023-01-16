@@ -11,23 +11,32 @@
     <form id="form-data" class="container">
         <div class="container_bot_results">
             <div class="line">
-                <div class="bot">
-                    <p>BOT 1</p>
-                    <input id="predict_bot1" type="text" readonly>
-                    <button type="button" id="btn_win1">WIN</button>
-                    <label>Win: <label id="count_win1">0</label></label>
+                <div>
+                    <div class="score">Score: <label id="score_b1">0</label></div>
+                    <div class="bot">
+                        <p>BOT 1</p>
+                        <input id="predict_bot1" type="text" readonly>
+                        <button type="button" id="btn_win1">WIN</button>
+                        <label>Win: <label id="count_win1">0</label></label>
+                    </div>
                 </div>
-                <div class="bot">
-                    <p>BOT 2</p>
-                    <input id="predict_bot2" type="text" readonly>
-                    <button type="button" id="btn_win2">WIN</button>
-                    <label>Win: <label id="count_win2">0</label></label>
+                <div>
+                    <div class="score">Score: <label id="score_b2">0</label></div>
+                    <div class="bot">
+                        <p>BOT 2</p>
+                        <input id="predict_bot2" type="text" readonly>
+                        <button type="button" id="btn_win2">WIN</button>
+                        <label>Win: <label id="count_win2">0</label></label>
+                    </div>
                 </div>
-                <div class="bot">
-                    <p>BOT 3</p>
-                    <input id="predict_bot3" type="text" readonly>
-                    <button type="button" id="btn_win3">WIN</button>
-                    <label>Win: <label id="count_win3">0</label></label>
+                <div>
+                    <div class="score">Score: <label id="score_b3">0</label></div>
+                    <div class="bot">
+                        <p>BOT 3</p>
+                        <input id="predict_bot3" type="text" readonly>
+                        <button type="button" id="btn_win3">WIN</button>
+                        <label>Win: <label id="count_win3">0</label></label>
+                    </div>
                 </div>
             </div>
             <div class="line">
@@ -52,6 +61,7 @@
 
             <div class="line">
                 <div class="container_btn">
+                    <button id="data_btn" type="button">DESATIVAR / ATIVAR COLETA</button>
                     <button id="download" type="button" onclick="downloadFiles()">DOWNLOAD XLSX</button>
                     <button id="btn_last_five">INSERIR 5 ULT. NUM.</button>
                 </div>

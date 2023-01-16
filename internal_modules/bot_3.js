@@ -1,7 +1,8 @@
 module.exports = {
-    predict(lastNumber,ultimos_numeros) {
+    predict(lastNumber, ultimos_numeros) {
         let contador_coluna1 = 0, contador_coluna2 = 0, contador_coluna3 = 0
         let proxima_coluna1, proxima_coluna2
+        var colums = []
 
         for (let i = 0; i < 5; i++) {
             if (ultimos_numeros[i] <= 12) {
@@ -24,11 +25,11 @@ module.exports = {
             proxima_coluna2 = (lastNumber + 1) % 3 + 1
         }
 
-        contador_coluna1 = 0
-        contador_coluna2 = 0
-        contador_coluna3 = 0
+        colums[0] = proxima_coluna1
+        colums[1] = proxima_coluna2
+        colums.sort()
 
-        return `${proxima_coluna1},${proxima_coluna2}`
+        return colums
 
     }
 }

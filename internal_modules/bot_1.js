@@ -1,5 +1,6 @@
 module.exports = {
     predict(lastNumber) {
+        var colums = []
         let last_column, prediction1, prediction2
         let column1_count = 0, column2_count = 0, column3_count = 0
 
@@ -51,6 +52,10 @@ module.exports = {
                 prediction2 = 1;
             }
         }
-        return `${prediction1},${prediction2}`
+
+        colums[0] = prediction1
+        colums[1] = prediction2
+        colums.sort()
+        return colums
     }
 }
