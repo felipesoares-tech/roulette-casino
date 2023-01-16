@@ -21,38 +21,72 @@ router.get('/download', async (req, res) => { //Rota para download do xlsx
     const worksheet2 = workbook.addWorksheet('Dados Bot 2')
     const worksheet3 = workbook.addWorksheet('Dados Bot 3')
 
-    const columns = [ //Criação das colunas no excel
-        { header: 'Rodada', key: 'rodada' },
-        { header: 'Previsao', key: 'previsao' },
-        { header: 'Vitoria', key: 'vitoria' },
-        { header: 'DataHora', key: 'dataHora' }
-    ]
 
-    worksheet1.columns = columns //definindo colunas para cada aba no excell, ex: 'Dados Bot 1'
-    worksheet2.columns = columns //definindo colunas para cada aba no excell, ex: 'Dados Bot 2'
-    worksheet3.columns = columns //definindo colunas para cada aba no excell, ex: 'Dados Bot 3'
-
-    const botData_1 = await result_bot1.find({}).skip(1) //Realiza uma busca no banco de dados de todos os registros e pula somente o primeiro registro
+    const botData_1 = await result_bot1.find({}).skip(1)
     const botData_2 = await result_bot2.find({}).skip(1)
     const botData_3 = await result_bot3.find({}).skip(1)
 
-    botData_1.forEach(data => { //forEach usado para passar por cada campo da linha atual e adicionar dentro do xlsx
-        const row = worksheet1.addRow(data)
-        row.eachCell((cell) => {
-            cell.alignment = { horizontal: 'center' };
-        })
+    const count_1 = await result_bot1.countDocuments({})
+    const count_2 = await result_bot2.countDocuments({})
+    const count_3 = await result_bot3.countDocuments({})
+
+    const rows_tab1 = botData_1.map(data => {
+        return [data.rodada, data.previsao, data.vitoria, data.dataHora]
     })
-    botData_2.forEach(data => {
-        const row = worksheet2.addRow(data)
-        row.eachCell((cell) => {
-            cell.alignment = { horizontal: 'center' };
-        })
+
+    const table1 = worksheet1.addTable({
+        ref: 'A1:D' + (count_1),
+        columns: [
+            { name: 'rodada', header: 'Rodada', style: { alignment: 'center' } },
+            { name: 'previsao', header: 'Previsao', style: { alignment: 'center' } },
+            { name: 'vitoria', header: 'Vitoria', style: { alignment: 'center' } },
+            { name: 'dataHora', header: 'DataHora', style: { alignment: 'center' } }
+        ],
+        rows: rows_tab1,
+        style: {
+            theme: "TableStyleMedium9",
+            showRowStripes: true,
+            alignment: 'center'
+        }
     })
-    botData_3.forEach(data => {
-        const row = worksheet3.addRow(data)
-        row.eachCell((cell) => {
-            cell.alignment = { horizontal: 'center' };
-        })
+
+    const rows_tab2 = botData_2.map(data => {
+        return [data.rodada, data.previsao, data.vitoria, data.dataHora]
+    })
+    const table2 = worksheet2.addTable({
+        ref: 'A1:D' + (count_2),
+        columns: [
+            { name: 'rodada', header: 'Rodada', style: { alignment: 'center' } },
+            { name: 'previsao', header: 'Previsao', style: { alignment: 'center' } },
+            { name: 'vitoria', header: 'Vitoria', style: { alignment: 'center' } },
+            { name: 'dataHora', header: 'DataHora', style: { alignment: 'center' } }
+        ],
+        rows: rows_tab2,
+        style: {
+            theme: "TableStyleMedium9",
+            showRowStripes: true,
+            alignment: 'center'
+        }
+    })
+
+    const rows_tab3 = botData_2.map(data => {
+        return [data.rodada, data.previsao, data.vitoria, data.dataHora]
+    })
+
+    const table3 = worksheet3.addTable({
+        ref: 'A1:D' + (count_3),
+        columns: [
+            { name: 'rodada', header: 'Rodada', style: { alignment: 'center' } },
+            { name: 'previsao', header: 'Previsao', style: { alignment: 'center' } },
+            { name: 'vitoria', header: 'Vitoria', style: { alignment: 'center' } },
+            { name: 'dataHora', header: 'DataHora', style: { alignment: 'center' } }
+        ],
+        rows: rows_tab3,
+        style: {
+            theme: "TableStyleMedium9",
+            showRowStripes: true,
+            alignment: 'center'
+        }
     })
 
     const archive = archiver('zip', {
@@ -68,7 +102,7 @@ router.get('/download', async (req, res) => { //Rota para download do xlsx
         workbook.xlsx.writeBuffer()
     ]).then(([buffer1]) => {
         archive.append(Buffer.from(buffer1), { name: 'data.xlsx' });
-        archive.finalize();
+        archive.finalize()
     })
 })
 
@@ -80,7 +114,7 @@ router.post('/array-update', (req, res) => { //Rota para atualizar o array ("Ins
 
     ultimos_numeros = paramArrayToInt // atualiza o array
 
-    var bot1_predict = bot_1.predict(ultimos_numeros[4])    /*ultimos_numeros[4] -> Ultimo número do array*/ 
+    var bot1_predict = bot_1.predict(ultimos_numeros[4])    /*ultimos_numeros[4] -> Ultimo número do array*/
     var bot2_predict = bot_2.predict(ultimos_numeros[4], ultimos_numeros)
     var bot3_predict = bot_3.predict(ultimos_numeros[4], ultimos_numeros)
 
