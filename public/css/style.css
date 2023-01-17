@@ -34,6 +34,7 @@ body {
     padding: 30px;
     gap: 10px;
     box-shadow: 4px 12px 38px -2px rgb(4 5 10);
+    border-radius: 15px;
 }
 
 body {
@@ -70,6 +71,7 @@ button:hover {
     padding: 30px;
     background-color: hwb(0deg 0% 100% / 60%);
     box-shadow: 4px 12px 38px -2px rgb(4 5 10);
+    border-radius: 15px;
 }
 
 
@@ -81,8 +83,8 @@ button:hover {
     font-weight: bolder;
 }
 
-.bot button:hover {
-    background-color: rgb(24, 131, 24);
+.bot button:hover{
+    background-color: rgb(12, 105, 12);
 }
 
 .container_btn {
@@ -99,4 +101,10 @@ button:hover {
     border: none;
     padding: 12px;
     background-color: rgb(232, 230, 245);
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.container_btn button:hover{
+    background-color: rgb(184, 180, 212);
 }

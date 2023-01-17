@@ -41,10 +41,10 @@ if (GetStorageStatus == 'false') {
     btn_win2.disabled = false
     btn_win3.disabled = false
     dataCollect = true
-    btn_win1.style.backgroundColor = 'rgb(35 143 35)'
-    btn_win2.style.backgroundColor = 'rgb(35 143 35)'
-    btn_win3.style.backgroundColor = 'rgb(35 143 35)'
-
+    
+    btn_win1.removeAttribute("style")
+    btn_win2.removeAttribute("style")
+    btn_win3.removeAttribute("style")
 }
 
 document.getElementById('data_btn').addEventListener('click', () => {
