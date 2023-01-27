@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { numberToDate } = require('xlsx-populate/lib/dateConverter')
 const Schema = mongoose.Schema
 
 const ResultBot1 = new Schema({
@@ -12,6 +13,10 @@ const ResultBot1 = new Schema({
     },
     vitoria: {
         type: Boolean,
+        require: true
+    },
+    linha: {
+        type: Number,
         require: true
     },
     match: {
@@ -38,6 +43,10 @@ const ResultBot2 = new Schema({
         type: Boolean,
         require: true
     },
+    linha: {
+        type: Number,
+        require: true
+    },
     match: {
         type: Boolean,
         require: false
@@ -60,6 +69,10 @@ const ResultBot3 = new Schema({
     },
     vitoria: {
         type: Boolean,
+        require: true
+    },
+    linha: {
+        type: Number,
         require: true
     },
     match: {
